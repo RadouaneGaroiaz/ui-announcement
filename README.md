@@ -12,7 +12,7 @@ This script adds a versatile announcement system to your FiveM server, allowing 
 
 ## Preview 
 
-![FiveM Multi-Type Announcement System](https://streamable.com/n76bnl)
+[![FiveM Multi-Type Announcement System](https://streamable.com/n76bnl)
 
 ## Installation
 
