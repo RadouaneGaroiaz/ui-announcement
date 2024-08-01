@@ -10,6 +10,10 @@ This script adds a versatile announcement system to your FiveM server, allowing 
 - Distinctive styling for each announcement type
 - Alarm sound for Disaster announcements
 
+## Preview 
+
+![FiveM Multi-Type Announcement System](https://streamable.com/n76bnl)
+
 ## Installation
 
 1. Copy the `ui-announcement` folder to your FiveM server's `resources` directory.
