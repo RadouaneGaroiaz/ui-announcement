@@ -1,11 +1,7 @@
 local function toggleNuiFrame(shouldShow)
     SendReactMessage('setVisible', shouldShow)
   end
-  
-  RegisterCommand('show-nui', function()
-    toggleNuiFrame(true)
-    debugPrint('Show NUI frame')
-  end)
+
   
   RegisterNUICallback('hideFrame', function(_, cb)
     toggleNuiFrame(false)
