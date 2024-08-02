@@ -47,6 +47,7 @@ To change the alarm sound for Disaster announcements, modify the `client.lua` fi
 **Important:** After making any changes to the UI (React components), you must rebuild the project. Navigate to the `ui-announcement/web` directory and run:
 
 ```
+yarn (to install depandencies)
 yarn build
 ```
 
