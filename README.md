@@ -63,6 +63,8 @@ This will generate the updated files that FiveM will use to display the UI.
 ## Dependencies
 
 - Yarn (for building the UI after changes)
+- Ox_lib
+- interact-sound
 
 ## Troubleshooting
 
