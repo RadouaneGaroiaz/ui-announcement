@@ -111,12 +111,79 @@ const Announcement: React.FC<AnnouncementProps> = ({ type, message, speed }) => 
   );
 };
 
+
+//Image Add
+
+interface ImageAnnouncementProps {
+  imageUrl: string;
+  duration: number;
+}
+
+const ImageAnnouncement: React.FC<ImageAnnouncementProps> = ({ imageUrl, duration }) => {
+  const [position, setPosition] = useState(100);
+
+  useEffect(() => {
+    const animationDuration = 1000; // 1 second for the slide-in/out animation
+    const holdDuration = duration - (2 * animationDuration); // Hold in the center
+
+    const slideIn = setTimeout(() => setPosition(0), 100);
+    const slideOut = setTimeout(() => setPosition(-100), holdDuration + animationDuration);
+
+    return () => {
+      clearTimeout(slideIn);
+      clearTimeout(slideOut);
+    };
+  }, [duration]);
+
+  return (
+    <div
+      className="image-announcement-container"
+      style={{
+        position: 'fixed',
+        top: '50%',
+        right: `${position}%`,
+        transform: 'translate(0, -50%)',
+        color: 'white',
+        padding: '20px',
+        transition: 'right 1s ease-in-out',
+        width: '400px', // Fixed width
+        height: '300px', // Fixed height
+        textAlign: 'center',
+        overflow: 'hidden', // In case content exceeds fixed size
+      }}
+    >
+      <div style={{ 
+        width: '100%', 
+        height: 'calc(100% - 40px)', // Adjust based on title size
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <img 
+          src={imageUrl} 
+          alt={"img"} 
+          style={{ 
+            maxWidth: '100%', 
+            maxHeight: '100%', 
+            objectFit: 'contain',
+            opacity: 0.7, // Reduced opacity
+          }} 
+        />
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [showAnnouncement, setShowAnnouncement] = useState(false);
   const [announcementType, setAnnouncementType] = useState<'police' | 'ems' | 'disaster'>('police');
   const [announcementMessage, setAnnouncementMessage] = useState("");
   const [announcementDuration, setAnnouncementDuration] = useState(5000);
   const [announcementSpeed, setAnnouncementSpeed] = useState(0.3);
+
+  const [showImageAnnouncement, setShowImageAnnouncement] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageDuration, setImageDuration] = useState(5000);
   
   useNuiEvent<{ type: 'police' | 'ems' | 'disaster'; message: string; duration: number, speed: number }>('showAnnouncement', (data) => {
     setAnnouncementType(data.type);
@@ -127,6 +194,13 @@ const App: React.FC = () => {
     setTimeout(() => setShowAnnouncement(false), data.duration);
   });
 
+  useNuiEvent<{ link: string; duration: number }>('showAdd', (data) => {
+    setImageUrl(data.link);
+    setImageDuration(data.duration);
+    setShowImageAnnouncement(true);
+    setTimeout(() => setShowImageAnnouncement(false), data.duration);
+  });
+
   return (
     <div className="nui-wrapper">
       {showAnnouncement && 
@@ -135,6 +209,12 @@ const App: React.FC = () => {
           message={announcementMessage} 
           speed={announcementSpeed}
 
+        />
+      }
+       {showImageAnnouncement && 
+        <ImageAnnouncement 
+          imageUrl={imageUrl} 
+          duration={imageDuration} 
         />
       }
     </div>
