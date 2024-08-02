@@ -14,7 +14,7 @@ debugData([
 interface AnnouncementProps {
   type: 'police' | 'ems' | 'disaster';
   message: string;
-  duration: number;
+  speed: number;
 }
 
 const getAnnouncementStyle = (type: 'police' | 'ems' | 'disaster') => {
@@ -48,7 +48,7 @@ const getAnnouncementIcon = (type: 'police' | 'ems' | 'disaster') => {
   }
 };
 
-const Announcement: React.FC<AnnouncementProps> = ({ type, message, duration }) => {
+const Announcement: React.FC<AnnouncementProps> = ({ type, message, speed }) => {
   const [position, setPosition] = useState(100);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Announcement: React.FC<AnnouncementProps> = ({ type, message, duration }) 
         if (prevPosition < -100) {
           return 100;
         }
-        return prevPosition - 0.3;
+        return prevPosition - speed;
       });
     }, 20);
 
@@ -116,11 +116,13 @@ const App: React.FC = () => {
   const [announcementType, setAnnouncementType] = useState<'police' | 'ems' | 'disaster'>('police');
   const [announcementMessage, setAnnouncementMessage] = useState("");
   const [announcementDuration, setAnnouncementDuration] = useState(5000);
+  const [announcementSpeed, setAnnouncementSpeed] = useState(0.3);
   
-  useNuiEvent<{ type: 'police' | 'ems' | 'disaster'; message: string; duration: number }>('showAnnouncement', (data) => {
+  useNuiEvent<{ type: 'police' | 'ems' | 'disaster'; message: string; duration: number, speed: number }>('showAnnouncement', (data) => {
     setAnnouncementType(data.type);
     setAnnouncementMessage(data.message);
     setAnnouncementDuration(data.duration);
+    setAnnouncementSpeed(data.speed);
     setShowAnnouncement(true);
     setTimeout(() => setShowAnnouncement(false), data.duration);
   });
@@ -131,7 +133,8 @@ const App: React.FC = () => {
         <Announcement 
           type={announcementType} 
           message={announcementMessage} 
-          duration={announcementDuration} 
+          speed={announcementSpeed}
+
         />
       }
     </div>
