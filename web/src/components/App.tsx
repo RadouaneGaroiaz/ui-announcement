@@ -113,62 +113,82 @@ const Announcement: React.FC<AnnouncementProps> = ({ type, message, speed }) => 
 
 
 //Image Add
-
 interface ImageAnnouncementProps {
   imageUrl: string;
   duration: number;
 }
-
 const ImageAnnouncement: React.FC<ImageAnnouncementProps> = ({ imageUrl, duration }) => {
   const [position, setPosition] = useState(100);
+  const [progress, setProgress] = useState(100);
 
   useEffect(() => {
-    const animationDuration = 1000; // 1 second for the slide-in/out animation
-    const holdDuration = duration - (2 * animationDuration); // Hold in the center
-
+    const animationDuration = 1000;
+    const holdDuration = duration - (2 * animationDuration);
     const slideIn = setTimeout(() => setPosition(0), 100);
     const slideOut = setTimeout(() => setPosition(-100), holdDuration + animationDuration);
+
+    const startTime = Date.now();
+    const progressInterval = setInterval(() => {
+      const elapsedTime = Date.now() - startTime;
+      const remainingProgress = Math.max(0, 100 - (elapsedTime / duration) * 100);
+      setProgress(remainingProgress);
+      if (elapsedTime >= duration) {
+        clearInterval(progressInterval);
+      }
+    }, 16);
 
     return () => {
       clearTimeout(slideIn);
       clearTimeout(slideOut);
+      clearInterval(progressInterval);
     };
   }, [duration]);
 
   return (
-    <div
-      className="image-announcement-container"
-      style={{
-        position: 'fixed',
-        top: '50%',
-        right: `${position}%`,
-        transform: 'translate(0, -50%)',
-        color: 'white',
-        padding: '20px',
-        transition: 'right 1s ease-in-out',
-        width: '400px', // Fixed width
-        height: '300px', // Fixed height
-        textAlign: 'center',
-        overflow: 'hidden', // In case content exceeds fixed size
-      }}
-    >
-      <div style={{ 
-        width: '100%', 
-        height: 'calc(100% - 40px)', // Adjust based on title size
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+    <div style={{
+      position: 'fixed',
+      top: '50%',
+      right: `${position}%`,
+      transform: 'translate(0, -50%)',
+      transition: 'right 1s ease-in-out',
+      margin: '0 10px',
+      opacity: '0.6',
+    }}>
+      <div
+        className="image-announcement-container"
+        style={{
+          width: '400px',
+          height: '500px',
+          overflow: 'hidden',
+          borderRadius: '10px',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+          //marginBottom: '10px', 
+        }}
+      >
         <img 
           src={imageUrl} 
-          alt={"img"} 
+          alt="Announcement" 
           style={{ 
-            maxWidth: '100%', 
-            maxHeight: '100%', 
-            objectFit: 'contain',
-            opacity: 0.7, // Reduced opacity
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
           }} 
         />
+      </div>
+      <div style={{
+        width: '100%',
+        height: '4px',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: '2px',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          width: `${progress}%`,
+          height: '100%',
+          backgroundColor: 'rgba(0, 255, 0, 0.8)',
+          transition: 'width 0.1s linear',
+          boxShadow: '0 0 10px rgba(0, 255, 0, 0.5)',
+        }} />
       </div>
     </div>
   );
@@ -178,7 +198,6 @@ const App: React.FC = () => {
   const [showAnnouncement, setShowAnnouncement] = useState(false);
   const [announcementType, setAnnouncementType] = useState<'police' | 'ems' | 'disaster'>('police');
   const [announcementMessage, setAnnouncementMessage] = useState("");
-  const [announcementDuration, setAnnouncementDuration] = useState(5000);
   const [announcementSpeed, setAnnouncementSpeed] = useState(0.3);
 
   const [showImageAnnouncement, setShowImageAnnouncement] = useState(false);
@@ -188,7 +207,6 @@ const App: React.FC = () => {
   useNuiEvent<{ type: 'police' | 'ems' | 'disaster'; message: string; duration: number, speed: number }>('showAnnouncement', (data) => {
     setAnnouncementType(data.type);
     setAnnouncementMessage(data.message);
-    setAnnouncementDuration(data.duration);
     setAnnouncementSpeed(data.speed);
     setShowAnnouncement(true);
     setTimeout(() => setShowAnnouncement(false), data.duration);
