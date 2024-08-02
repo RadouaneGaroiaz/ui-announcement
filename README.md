@@ -22,6 +22,7 @@ This script adds a versatile announcement system to your FiveM server, allowing 
    ```
    ensure ui-announcement
    ```
+4. put alarm.ogg in \interact-sound\client\html\sounds
 
 3. If you're using a permissions system, make sure to set up the appropriate permissions for the `uiannounce` command.
 
