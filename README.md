@@ -31,20 +31,12 @@ This script adds a versatile announcement system to your FiveM server, allowing 
 Authorized users can trigger announcements using the following command:
 
 ```
-/uiannounce [type] [duration] [message]
+/uiannounce
 ```
 
 - `[type]`: Can be "police", "ems", or "disaster"
 - `[duration]`: The duration of the announcement in seconds
 - `[message]`: The content of the announcement
-
-### Examples:
-
-```
-/uiannounce police 10 Attention all units: Suspect on the run in Downtown area
-/uiannounce ems 8 Medical emergency at Vinewood Boulevard, all nearby units respond
-/uiannounce disaster 15 Severe weather warning: Take shelter immediately!
-```
 
 ## Configuration
 
