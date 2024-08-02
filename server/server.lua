@@ -26,7 +26,7 @@ RegisterCommand("uiannounce", function(source, args, rawCommand)
 end, false)
 
 
-RegisterCommand("uiadd", function(source, args, rawCommand)
+RegisterCommand("uipub", function(source, args, rawCommand)
     
     -- You might want to add a permission check here
      if not IsPlayerAceAllowed(source, "command.announce") then
