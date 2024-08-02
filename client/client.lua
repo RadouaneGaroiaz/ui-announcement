@@ -19,7 +19,7 @@ end)
 RegisterNetEvent("playDisasterAlarm")
 AddEventHandler("playDisasterAlarm", function()
     -- Play the alarm sound
-        TriggerEvent('InteractSound_CL:PlayOnOne', 'godfather', 0.5)
+        TriggerEvent('InteractSound_CL:PlayOnOne', 'alarm', 0.5)
 end)
 
 
