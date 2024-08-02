@@ -16,6 +16,13 @@ AddEventHandler("showAnnouncement", function(data)
     duration = data.duration, speed = data.speed})
 end)
 
+RegisterNetEvent("showAdd")
+AddEventHandler("showAdd", function(data)
+    toggleNuiFrame(true)
+    SendReactMessage('showAdd', {link = data.link,
+    duration = data.duration})
+end)
+
 RegisterNetEvent("playDisasterAlarm")
 AddEventHandler("playDisasterAlarm", function()
     -- Play the alarm sound
@@ -61,4 +68,29 @@ AddEventHandler("ui-announcement:allowAnnouncement", function(data)
      if input[1] == "disaster" then
       TriggerEvent("playDisasterAlarm", -1)
   end
+end)
+
+
+RegisterNetEvent("ui-announcement:allowAdd")
+AddEventHandler("ui-announcement:allowAdd", function(data)
+  local input = lib.inputDialog('UI Add', {
+    
+    {type = 'number', label = 'Duration', description = 'Duration in Seconds', icon = 'hashtag', required = true},
+    {type = 'input', label = 'Link', description = 'Image link', placeholder = 'Link', icon = 'pencil', required = true},
+    
+  })
+
+
+  if not input then return end
+   
+  --print(json.encode(input))
+   
+   -- Convert seconds to milliseconds
+   local durationMs = input[1] * 1000
+
+    TriggerEvent("showAdd", {
+      duration = durationMs,
+        link = input[2],
+    })
+   
 end)
