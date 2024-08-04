@@ -13,6 +13,7 @@ This script adds a versatile announcement system to your FiveM server, allowing 
 ## Preview 
 
 [link](https://streamable.com/sue0q0)
+[link](https://streamable.com/v3frel)
 
 ## Installation
 
@@ -37,6 +38,13 @@ Authorized users can trigger announcements using the following command:
 - `[type]`: Can be "police", "ems", or "disaster"
 - `[duration]`: The duration of the announcement in seconds
 - `[message]`: The content of the announcement
+
+```
+/uipub
+```
+
+- `[duration]`: The duration of the announcement in seconds
+- `[url]`: The url of image
 
 ## Configuration
 
