@@ -26,7 +26,7 @@ RegisterCommand("uiannounce", function(source, args, rawCommand)
 end, false)
 
 
-RegisterCommand("uipub", function(source, args, rawCommand)
+RegisterCommand("advertisement", function(source, args, rawCommand)
     
     -- You might want to add a permission check here
      if not IsPlayerAceAllowed(source, "command.announce") then
@@ -44,4 +44,20 @@ RegisterCommand("uipub", function(source, args, rawCommand)
     TriggerClientEvent("ui-announcement:allowAdd", source)
 end, false)
 
+
+RegisterNetEvent('ui-announcement:server:showAdd')
+AddEventHandler('ui-announcement:server:showAdd', function(duration, link)
+    TriggerClientEvent('ui-announcement:client:showAdd', -1, duration, link)
+end)
+
+RegisterNetEvent('ui-announcement:server:showAnnouncement')
+AddEventHandler('ui-announcement:server:showAnnouncement', function(type, duration, message, speed)
+    TriggerClientEvent('ui-announcement:client:showAnnouncement', -1, type, duration, message, speed)
+end)
+
+
+RegisterNetEvent('playDisasterAlarm')
+AddEventHandler('playDisasterAlarm', function()
+    TriggerClientEvent('playDisasterAlarm:client', -1)
+end)
 

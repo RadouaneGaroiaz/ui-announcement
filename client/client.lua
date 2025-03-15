@@ -9,24 +9,24 @@ local function toggleNuiFrame(shouldShow)
     cb({})
   end)
 
-RegisterNetEvent("showAnnouncement")
-AddEventHandler("showAnnouncement", function(data)
+RegisterNetEvent("ui-announcement:client:showAnnouncement")
+AddEventHandler("ui-announcement:client:showAnnouncement", function(data)
     toggleNuiFrame(true)
     SendReactMessage('showAnnouncement', {type = data.type, message = data.message,
     duration = data.duration, speed = data.speed})
 end)
 
-RegisterNetEvent("showAdd")
-AddEventHandler("showAdd", function(data)
+RegisterNetEvent("ui-announcement:client:showAdd")
+AddEventHandler("ui-announcement:client:showAdd", function(data)
     toggleNuiFrame(true)
     SendReactMessage('showAdd', {link = data.link,
-    duration = data.duration})
+    duration = data.duration, opacity = data.opacity})
 end)
 
-RegisterNetEvent("playDisasterAlarm")
-AddEventHandler("playDisasterAlarm", function()
+RegisterNetEvent("playDisasterAlarm:client")
+AddEventHandler("playDisasterAlarm:client", function()
     -- Play the alarm sound
-        TriggerEvent('InteractSound_CL:PlayOnOne', 'alarm', 0.5)
+    TriggerEvent('InteractSound_CL:PlayOnOne', 'alarm', 0.5)
 end)
 
 
@@ -49,15 +49,12 @@ AddEventHandler("ui-announcement:allowAnnouncement", function(data)
     
   })
 
-
   if not input then return end
-   
-  --print(json.encode(input))
    
    -- Convert seconds to milliseconds
    local durationMs = input[2] * 1000
 
-    TriggerEvent("showAnnouncement", {
+    TriggerServerEvent("ui-announcement:server:showAnnouncement", {
         type = input[1],
         message = input[3],
         duration = durationMs,
@@ -66,9 +63,10 @@ AddEventHandler("ui-announcement:allowAnnouncement", function(data)
    
      -- If it's a disaster announcement, trigger the alarm sound
      if input[1] == "disaster" then
-      TriggerEvent("playDisasterAlarm", -1)
+      TriggerServerEvent("playDisasterAlarm")
   end
 end)
+
 
 
 RegisterNetEvent("ui-announcement:allowAdd")
@@ -80,17 +78,16 @@ AddEventHandler("ui-announcement:allowAdd", function(data)
     
   })
 
-
   if not input then return end
-   
-  --print(json.encode(input))
    
    -- Convert seconds to milliseconds
    local durationMs = input[1] * 1000
 
-    TriggerEvent("showAdd", {
+    TriggerServerEvent("ui-announcement:server:showAdd", {
       duration = durationMs,
-        link = input[2],
+      link = input[2],
+      opacity = Config.ImageOpacity
+
     })
    
 end)

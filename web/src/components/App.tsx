@@ -116,8 +116,9 @@ const Announcement: React.FC<AnnouncementProps> = ({ type, message, speed }) => 
 interface ImageAnnouncementProps {
   imageUrl: string;
   duration: number;
+  opacity?: number;
 }
-const ImageAnnouncement: React.FC<ImageAnnouncementProps> = ({ imageUrl, duration }) => {
+const ImageAnnouncement: React.FC<ImageAnnouncementProps> = ({ imageUrl, duration, opacity }) => {
   const [position, setPosition] = useState(100);
   const [progress, setProgress] = useState(100);
 
@@ -152,7 +153,7 @@ const ImageAnnouncement: React.FC<ImageAnnouncementProps> = ({ imageUrl, duratio
       transform: 'translate(0, -50%)',
       transition: 'right 1s ease-in-out',
       margin: '0 10px',
-      opacity: '0.6',
+      opacity: opacity,
     }}>
       <div
         className="image-announcement-container"
