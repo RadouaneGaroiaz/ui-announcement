@@ -1,16 +1,12 @@
 fx_version "cerulean"
 
-description "Basic React (TypeScript) & Lua Game Scripts Boilerplate"
-author "Project Error"
+
+author 'Dudu49'
 version '1.0.0'
-repository 'https://github.com/project-error/fivem-react-boilerplate-lua'
+description 'FiveM Multi-Type Announcement System'
 
 lua54 'yes'
-
-games {
-  "gta5",
-  "rdr3"
-}
+game "gta5"
 
 shared_scripts {
   '@ox_lib/init.lua',
