@@ -17,11 +17,11 @@ This script adds a versatile announcement system to your FiveM server, allowing 
 
 ## Installation
 
-1. Copy the `404-Uiannouncement` folder to your FiveM server's `resources` directory.
+1. Copy the `404-UiAnnouncement` folder to your FiveM server's `resources` directory.
 
 2. Add the following line to your `server.cfg` file:
    ```
-   ensure 404-Uiannouncement
+   ensure 404-UiAnnouncement
    ```
 4. put alarm.ogg in \interact-sound\client\html\sounds
 
@@ -52,7 +52,7 @@ You can customize the appearance of the announcements by modifying the styles in
 
 To change the alarm sound for Disaster announcements, modify the `client.lua` file.
 
-**Important:** After making any changes to the UI (React components), you must rebuild the project. Navigate to the `404-Uiannouncement/web` directory and run:
+**Important:** After making any changes to the UI (React components), you must rebuild the project. Navigate to the `404-UiAnnouncement/web` directory and run:
 
 ```
 yarn (to install depandencies)
