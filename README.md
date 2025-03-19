@@ -12,8 +12,7 @@ This script adds a versatile announcement system to your FiveM server, allowing 
 
 ## Preview 
 
-[link](https://streamable.com/sue0q0)
-[link](https://streamable.com/v3frel)
+[link](https://streamable.com/i4c0py)
 
 ## Installation
 
